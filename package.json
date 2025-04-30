@@ -3,19 +3,27 @@
   "displayName": "wholeLineCompletion",
   "description": "This extension shows whole line suggestions based on the current word",
   "version": "0.0.1",
+  "icon": "images/icon.jpeg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuan/wholelinecompletion.git"
+  },
+  "publisher": "tuannguyen",
   "engines": {
     "vscode": "^1.99.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "wholelinecompletion.helloWorld",
-        "title": "Hello World"
+        "command": "wholelinecompletion.triggerSuggest",
+        "title": "Trigger Whole Line Completion"
       }
     ]
   },
@@ -25,7 +33,9 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "vscode:package": "vsce package --no-dependencies",
+    "vscode:publish": "vsce publish --no-dependencies"
   },
   "devDependencies": {
     "@types/vscode": "^1.99.0",
