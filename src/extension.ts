@@ -1,25 +1,43 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import { showSuggestions } from "./suggest";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  const openDocs = new Set<vscode.Uri>();
+  const currentActiveEditor = vscode.window.activeTextEditor?.document.uri;
+  if (currentActiveEditor != null) {
+    openDocs.add(currentActiveEditor);
+  }
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "wholelinecompletion" is now active!');
+  vscode.window.onDidChangeActiveTextEditor((editor) => {
+    if (editor && !openDocs.has(editor.document.uri)) {
+      openDocs.add(editor.document.uri);
+    }
+  });
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('wholelinecompletion.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from wholeLineCompletion!');
-	});
+  vscode.workspace.onDidCloseTextDocument((doc) => {
+    if (openDocs.has(doc.uri)) {
+      openDocs.delete(doc.uri);
+    }
+  });
 
-	context.subscriptions.push(disposable);
+  const disposable = vscode.commands.registerCommand(
+    "wholelinecompletion.triggerSuggest",
+    async () => {
+      const textEditor = vscode.window.activeTextEditor;
+      if (textEditor == null) {
+        return;
+      }
+
+      console.log(openDocs);
+      await showSuggestions(openDocs, textEditor);
+    }
+  );
+
+  context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated
