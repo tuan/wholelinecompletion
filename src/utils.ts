@@ -6,14 +6,14 @@ export function getCurrentPosition(
   return textEditor.selection.active;
 }
 
-export function getCurrentWord(textEditor: vscode.TextEditor): string {
-  const range = getCurrentWordRange(textEditor);
+export function getCurrentLine(textEditor: vscode.TextEditor): string {
+  const range = getCurrentLineRange(textEditor);
   return textEditor.document.getText(range);
 }
 
-export function getCurrentWordRange(
+export function getCurrentLineRange(
   textEditor: vscode.TextEditor
-): vscode.Range | undefined {
+): vscode.Range {
   const currentPosition = getCurrentPosition(textEditor);
-  return textEditor.document.getWordRangeAtPosition(currentPosition);
+  return textEditor.document.lineAt(currentPosition).range;
 }
