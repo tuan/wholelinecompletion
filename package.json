@@ -2,7 +2,7 @@
   "name": "wholelinecompletion",
   "displayName": "wholeLineCompletion",
   "description": "This extension shows whole line suggestions based on the current word",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "images/icon.jpeg",
   "repository": {
     "type": "git",
@@ -38,14 +38,15 @@
     "vscode:publish": "vsce publish --no-dependencies"
   },
   "devDependencies": {
-    "@types/vscode": "^1.99.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.99.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
     "eslint": "^9.23.0",
     "typescript": "^5.8.2",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "vsce": "^2.15.0"
   }
 }
